@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='utf-8'?>
+<fmiModelDescription fmiVersion="2.0" modelName="UseCaseComposition.AdaptionUnit" guid="{03814b9c-6932-53c9-8e18-af039dd5d493}" description="Adapts plant outputs into the software control-signal bundle." version="1.0" generationTool="pyssp_sysml2 tooling" generationDateAndTime="2026-03-18T13:57:03Z" variableNamingConvention="structured" numberOfEventIndicators="0">
+  <CoSimulation modelIdentifier="AdaptionUnit" />
+  <ModelVariables>
+    <ScalarVariable name="LHexTout.value" valueReference="0" causality="input" description="Shared scalar proxy port used for single-value SSP connectors.">
+      <Real />
+    </ScalarVariable>
+    <ScalarVariable name="sWsignals.Aircraft_State" valueReference="1" causality="output" description="Canonical ECS software input bundle normalized from external SSP naming.">
+      <Integer />
+    </ScalarVariable>
+    <ScalarVariable name="sWsignals.TLiquid" valueReference="2" causality="output" description="Canonical ECS software input bundle normalized from external SSP naming.">
+      <Real />
+    </ScalarVariable>
+  </ModelVariables>
+  <ModelStructure>
+    <Outputs>
+      <Unknown index="2" />
+      <Unknown index="3" />
+    </Outputs>
+    <InitialUnknowns>
+      <Unknown index="2" />
+      <Unknown index="3" />
+    </InitialUnknowns>
+  </ModelStructure>
+</fmiModelDescription>

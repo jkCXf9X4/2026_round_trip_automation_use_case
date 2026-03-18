@@ -1,0 +1,96 @@
+<?xml version='1.0' encoding='utf-8'?>
+<fmiModelDescription fmiVersion="2.0" modelName="UseCaseComposition.Consumer" guid="{ae4eed32-6bec-53a8-a767-0cf008d24090}" description="Representative heat consumer connected to the ECS and later fuel loop." version="1.0" generationTool="pyssp_sysml2 tooling" generationDateAndTime="2026-03-18T13:57:03Z" variableNamingConvention="structured" numberOfEventIndicators="0">
+  <CoSimulation modelIdentifier="Consumer" />
+  <ModelVariables>
+    <ScalarVariable name="heatLoadNominal_W" valueReference="0" causality="parameter" variability="fixed">
+      <Real start="2500" />
+    </ScalarVariable>
+    <ScalarVariable name="Alt.value" valueReference="1" causality="input" description="Shared scalar proxy port used for single-value SSP connectors.">
+      <Real />
+    </ScalarVariable>
+    <ScalarVariable name="Mach.value" valueReference="2" causality="input" description="Shared scalar proxy port used for single-value SSP connectors.">
+      <Real />
+    </ScalarVariable>
+    <ScalarVariable name="Pamb.value" valueReference="3" causality="input" description="Shared scalar proxy port used for single-value SSP connectors.">
+      <Real />
+    </ScalarVariable>
+    <ScalarVariable name="Tamb.value" valueReference="4" causality="input" description="Shared scalar proxy port used for single-value SSP connectors.">
+      <Real />
+    </ScalarVariable>
+    <ScalarVariable name="heatLoad.value" valueReference="5" causality="input" description="Shared scalar proxy port used for single-value SSP connectors.">
+      <Real />
+    </ScalarVariable>
+    <ScalarVariable name="consumerFeed.X[1]" valueReference="6" causality="input" description="Shared thermal-fluid state passed between ECS, consumer, and fuel subsystems.">
+      <Real />
+    </ScalarVariable>
+    <ScalarVariable name="consumerFeed.X[2]" valueReference="7" causality="input" description="Shared thermal-fluid state passed between ECS, consumer, and fuel subsystems.">
+      <Real />
+    </ScalarVariable>
+    <ScalarVariable name="consumerFeed.X[3]" valueReference="8" causality="input" description="Shared thermal-fluid state passed between ECS, consumer, and fuel subsystems.">
+      <Real />
+    </ScalarVariable>
+    <ScalarVariable name="consumerFeed.h" valueReference="9" causality="input" description="Shared thermal-fluid state passed between ECS, consumer, and fuel subsystems.">
+      <Real />
+    </ScalarVariable>
+    <ScalarVariable name="consumerFeed.hn" valueReference="10" causality="input" description="Shared thermal-fluid state passed between ECS, consumer, and fuel subsystems.">
+      <Real />
+    </ScalarVariable>
+    <ScalarVariable name="consumerFeed.m" valueReference="11" causality="input" description="Shared thermal-fluid state passed between ECS, consumer, and fuel subsystems.">
+      <Real />
+    </ScalarVariable>
+    <ScalarVariable name="consumerFeed.p" valueReference="12" causality="input" description="Shared thermal-fluid state passed between ECS, consumer, and fuel subsystems.">
+      <Real />
+    </ScalarVariable>
+    <ScalarVariable name="consumerRet.X[1]" valueReference="13" causality="output" description="Shared thermal-fluid state passed between ECS, consumer, and fuel subsystems.">
+      <Real />
+    </ScalarVariable>
+    <ScalarVariable name="consumerRet.X[2]" valueReference="14" causality="output" description="Shared thermal-fluid state passed between ECS, consumer, and fuel subsystems.">
+      <Real />
+    </ScalarVariable>
+    <ScalarVariable name="consumerRet.X[3]" valueReference="15" causality="output" description="Shared thermal-fluid state passed between ECS, consumer, and fuel subsystems.">
+      <Real />
+    </ScalarVariable>
+    <ScalarVariable name="consumerRet.h" valueReference="16" causality="output" description="Shared thermal-fluid state passed between ECS, consumer, and fuel subsystems.">
+      <Real />
+    </ScalarVariable>
+    <ScalarVariable name="consumerRet.hn" valueReference="17" causality="output" description="Shared thermal-fluid state passed between ECS, consumer, and fuel subsystems.">
+      <Real />
+    </ScalarVariable>
+    <ScalarVariable name="consumerRet.m" valueReference="18" causality="output" description="Shared thermal-fluid state passed between ECS, consumer, and fuel subsystems.">
+      <Real />
+    </ScalarVariable>
+    <ScalarVariable name="consumerRet.p" valueReference="19" causality="output" description="Shared thermal-fluid state passed between ECS, consumer, and fuel subsystems.">
+      <Real />
+    </ScalarVariable>
+    <ScalarVariable name="inletTemp.value" valueReference="20" causality="output" description="Shared scalar proxy port used for single-value SSP connectors.">
+      <Real />
+    </ScalarVariable>
+    <ScalarVariable name="outletTemp.value" valueReference="21" causality="output" description="Shared scalar proxy port used for single-value SSP connectors.">
+      <Real />
+    </ScalarVariable>
+  </ModelVariables>
+  <ModelStructure>
+    <Outputs>
+      <Unknown index="14" />
+      <Unknown index="15" />
+      <Unknown index="16" />
+      <Unknown index="17" />
+      <Unknown index="18" />
+      <Unknown index="19" />
+      <Unknown index="20" />
+      <Unknown index="21" />
+      <Unknown index="22" />
+    </Outputs>
+    <InitialUnknowns>
+      <Unknown index="14" />
+      <Unknown index="15" />
+      <Unknown index="16" />
+      <Unknown index="17" />
+      <Unknown index="18" />
+      <Unknown index="19" />
+      <Unknown index="20" />
+      <Unknown index="21" />
+      <Unknown index="22" />
+    </InitialUnknowns>
+  </ModelStructure>
+</fmiModelDescription>

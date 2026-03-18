@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='utf-8'?>
+<ssv:ParameterSet xmlns:ssv="http://ssp-standard.org/SSP1/SystemStructureParameterValues" xmlns:ssc="http://ssp-standard.org/SSP1/SystemStructureCommon" version="1.0" name="default">
+  <ssv:Parameters>
+    <ssv:Parameter name="atmos.atmosphere_margin">
+      <ssv:Real value="0"/>
+    </ssv:Parameter>
+    <ssv:Parameter name="consumer.heatLoadNominal_W">
+      <ssv:Real value="2500"/>
+    </ssv:Parameter>
+    <ssv:Parameter name="ecs_hw.coolingTarget_K">
+      <ssv:Real value="285"/>
+    </ssv:Parameter>
+  </ssv:Parameters>
+</ssv:ParameterSet>

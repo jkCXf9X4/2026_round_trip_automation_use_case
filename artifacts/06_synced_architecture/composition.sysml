@@ -1,0 +1,40 @@
+package UCWorkflow {
+  part def UseCaseComposition {
+    part adaption : AdaptionUnit;
+    part atmos : Atmos;
+    part consumer : Consumer;
+    part ecs_hw : ECS_HW;
+    part ecs_sw : OpenSW_busInput;
+    part fuel : FS_OPSC;
+    part interface_model : FMU_16_aero_interface;
+    part valve_model : L90LS_UD_OS_OS;
+    connect adaption.sWsignals to ecs_sw.Input;
+    connect atmos.Pamb to consumer.Pamb;
+    connect atmos.Pamb to ecs_hw.Pamb;
+    connect atmos.Pamb to fuel.P_AMB;
+    connect atmos.Tamb to consumer.Tamb;
+    connect atmos.Tamb to ecs_hw.Tamb;
+    connect atmos.Tamb to fuel.T_AMB;
+    connect consumer.consumerRet to fuel.pmhn;
+    connect ecs_hw.LHexTout to adaption.LHexTout;
+    connect ecs_hw.consumerFeed to consumer.consumerFeed;
+    connect ecs_sw.TCoolingPack to ecs_hw.reqCoolingTemperature;
+    connect fuel.pmh to ecs_hw.consumerRet;
+    connect fuel.valve_mflowA to interface_model.mflowA;
+    connect fuel.valve_mflowB to interface_model.mflowB;
+    connect fuel.valve_p1 to valve_model.pA;
+    connect fuel.valve_p1 to valve_model.pB;
+    connect fuel.valve_p2 to valve_model.pTA;
+    connect fuel.valve_p3 to valve_model.pTB;
+    connect fuel.valve_u to interface_model.u;
+    connect interface_model.pLin to valve_model.pLin;
+    connect interface_model.pLmax to valve_model.pLmax;
+    connect interface_model.p_P to valve_model.pP;
+    connect interface_model.p_PS to valve_model.p_PS;
+    connect interface_model.p_TP to valve_model.p_TP;
+    connect interface_model.uA to valve_model.uA;
+    connect interface_model.uB to valve_model.uB;
+    connect valve_model.qTA to interface_model.qTA;
+    connect valve_model.qTB to interface_model.qTB;
+  }
+}

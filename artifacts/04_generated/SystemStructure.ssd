@@ -1,0 +1,214 @@
+<?xml version='1.0' encoding='utf-8'?>
+<ssd:SystemStructureDescription xmlns:ssd="http://ssp-standard.org/SSP1/SystemStructureDescription" xmlns:ssc="http://ssp-standard.org/SSP1/SystemStructureCommon" version="1.0" name="UseCaseComposition" generationTool="pyssp_standard" generationDateAndTime="2026-03-18T14:57:03.337643">
+  <ssd:System name="UseCaseComposition">
+    <ssd:Elements>
+      <ssd:Component name="adaption" type="application/x-fmu-sharedlibrary" source="resources/AdaptionUnit.fmu">
+        <ssd:Connectors>
+          <ssd:Connector name="LHexTout.value" kind="input">
+            <ssc:Real/>
+          </ssd:Connector>
+          <ssd:Connector name="sWsignals.Aircraft_State" kind="output">
+            <ssc:Integer/>
+          </ssd:Connector>
+          <ssd:Connector name="sWsignals.TLiquid" kind="output">
+            <ssc:Real/>
+          </ssd:Connector>
+        </ssd:Connectors>
+      </ssd:Component>
+      <ssd:Component name="atmos" type="application/x-fmu-sharedlibrary" source="resources/Atmos.fmu">
+        <ssd:Connectors>
+          <ssd:Connector name="Alt.value" kind="input">
+            <ssc:Real/>
+          </ssd:Connector>
+          <ssd:Connector name="Ma.value" kind="input">
+            <ssc:Real/>
+          </ssd:Connector>
+          <ssd:Connector name="Pamb.value" kind="output">
+            <ssc:Real/>
+          </ssd:Connector>
+          <ssd:Connector name="Tamb.value" kind="output">
+            <ssc:Real/>
+          </ssd:Connector>
+          <ssd:Connector name="atmosphere_margin" kind="parameter">
+            <ssc:Real/>
+          </ssd:Connector>
+        </ssd:Connectors>
+      </ssd:Component>
+      <ssd:Component name="consumer" type="application/x-fmu-sharedlibrary" source="resources/Consumer.fmu">
+        <ssd:Connectors>
+          <ssd:Connector name="Alt.value" kind="input">
+            <ssc:Real/>
+          </ssd:Connector>
+          <ssd:Connector name="Mach.value" kind="input">
+            <ssc:Real/>
+          </ssd:Connector>
+          <ssd:Connector name="Pamb.value" kind="input">
+            <ssc:Real/>
+          </ssd:Connector>
+          <ssd:Connector name="Tamb.value" kind="input">
+            <ssc:Real/>
+          </ssd:Connector>
+          <ssd:Connector name="heatLoad.value" kind="input">
+            <ssc:Real/>
+          </ssd:Connector>
+          <ssd:Connector name="consumerFeed.X[1]" kind="input">
+            <ssc:Real/>
+          </ssd:Connector>
+          <ssd:Connector name="consumerFeed.X[2]" kind="input">
+            <ssc:Real/>
+          </ssd:Connector>
+          <ssd:Connector name="consumerFeed.X[3]" kind="input">
+            <ssc:Real/>
+          </ssd:Connector>
+          <ssd:Connector name="consumerFeed.h" kind="input">
+            <ssc:Real/>
+          </ssd:Connector>
+          <ssd:Connector name="consumerFeed.hn" kind="input">
+            <ssc:Real/>
+          </ssd:Connector>
+          <ssd:Connector name="consumerFeed.m" kind="input">
+            <ssc:Real/>
+          </ssd:Connector>
+          <ssd:Connector name="consumerFeed.p" kind="input">
+            <ssc:Real/>
+          </ssd:Connector>
+          <ssd:Connector name="consumerRet.X[1]" kind="output">
+            <ssc:Real/>
+          </ssd:Connector>
+          <ssd:Connector name="consumerRet.X[2]" kind="output">
+            <ssc:Real/>
+          </ssd:Connector>
+          <ssd:Connector name="consumerRet.X[3]" kind="output">
+            <ssc:Real/>
+          </ssd:Connector>
+          <ssd:Connector name="consumerRet.h" kind="output">
+            <ssc:Real/>
+          </ssd:Connector>
+          <ssd:Connector name="consumerRet.hn" kind="output">
+            <ssc:Real/>
+          </ssd:Connector>
+          <ssd:Connector name="consumerRet.m" kind="output">
+            <ssc:Real/>
+          </ssd:Connector>
+          <ssd:Connector name="consumerRet.p" kind="output">
+            <ssc:Real/>
+          </ssd:Connector>
+          <ssd:Connector name="inletTemp.value" kind="output">
+            <ssc:Real/>
+          </ssd:Connector>
+          <ssd:Connector name="outletTemp.value" kind="output">
+            <ssc:Real/>
+          </ssd:Connector>
+          <ssd:Connector name="heatLoadNominal_W" kind="parameter">
+            <ssc:Real/>
+          </ssd:Connector>
+        </ssd:Connectors>
+      </ssd:Component>
+      <ssd:Component name="ecs_hw" type="application/x-fmu-sharedlibrary" source="resources/ECS_HW.fmu">
+        <ssd:Connectors>
+          <ssd:Connector name="Alt.value" kind="input">
+            <ssc:Real/>
+          </ssd:Connector>
+          <ssd:Connector name="Mach.value" kind="input">
+            <ssc:Real/>
+          </ssd:Connector>
+          <ssd:Connector name="Pamb.value" kind="input">
+            <ssc:Real/>
+          </ssd:Connector>
+          <ssd:Connector name="Tamb.value" kind="input">
+            <ssc:Real/>
+          </ssd:Connector>
+          <ssd:Connector name="reqCoolingTemperature.value" kind="input">
+            <ssc:Real/>
+          </ssd:Connector>
+          <ssd:Connector name="consumerRet.X[1]" kind="input">
+            <ssc:Real/>
+          </ssd:Connector>
+          <ssd:Connector name="consumerRet.X[2]" kind="input">
+            <ssc:Real/>
+          </ssd:Connector>
+          <ssd:Connector name="consumerRet.X[3]" kind="input">
+            <ssc:Real/>
+          </ssd:Connector>
+          <ssd:Connector name="consumerRet.h" kind="input">
+            <ssc:Real/>
+          </ssd:Connector>
+          <ssd:Connector name="consumerRet.hn" kind="input">
+            <ssc:Real/>
+          </ssd:Connector>
+          <ssd:Connector name="consumerRet.m" kind="input">
+            <ssc:Real/>
+          </ssd:Connector>
+          <ssd:Connector name="consumerRet.p" kind="input">
+            <ssc:Real/>
+          </ssd:Connector>
+          <ssd:Connector name="LHexTout.value" kind="output">
+            <ssc:Real/>
+          </ssd:Connector>
+          <ssd:Connector name="consumerFeed.X[1]" kind="output">
+            <ssc:Real/>
+          </ssd:Connector>
+          <ssd:Connector name="consumerFeed.X[2]" kind="output">
+            <ssc:Real/>
+          </ssd:Connector>
+          <ssd:Connector name="consumerFeed.X[3]" kind="output">
+            <ssc:Real/>
+          </ssd:Connector>
+          <ssd:Connector name="consumerFeed.h" kind="output">
+            <ssc:Real/>
+          </ssd:Connector>
+          <ssd:Connector name="consumerFeed.hn" kind="output">
+            <ssc:Real/>
+          </ssd:Connector>
+          <ssd:Connector name="consumerFeed.m" kind="output">
+            <ssc:Real/>
+          </ssd:Connector>
+          <ssd:Connector name="consumerFeed.p" kind="output">
+            <ssc:Real/>
+          </ssd:Connector>
+          <ssd:Connector name="coolingTarget_K" kind="parameter">
+            <ssc:Real/>
+          </ssd:Connector>
+        </ssd:Connectors>
+      </ssd:Component>
+      <ssd:Component name="ecs_sw" type="application/x-fmu-sharedlibrary" source="resources/OpenSW_busInput.fmu">
+        <ssd:Connectors>
+          <ssd:Connector name="Input.Aircraft_State" kind="input">
+            <ssc:Integer/>
+          </ssd:Connector>
+          <ssd:Connector name="Input.TLiquid" kind="input">
+            <ssc:Real/>
+          </ssd:Connector>
+          <ssd:Connector name="TCoolingPack.value" kind="output">
+            <ssc:Real/>
+          </ssd:Connector>
+        </ssd:Connectors>
+      </ssd:Component>
+    </ssd:Elements>
+    <ssd:Connections>
+      <ssd:Connection startElement="adaption" startConnector="sWsignals.Aircraft_State" endElement="ecs_sw" endConnector="Input.Aircraft_State"/>
+      <ssd:Connection startElement="adaption" startConnector="sWsignals.TLiquid" endElement="ecs_sw" endConnector="Input.TLiquid"/>
+      <ssd:Connection startElement="atmos" startConnector="Pamb.value" endElement="consumer" endConnector="Pamb.value"/>
+      <ssd:Connection startElement="atmos" startConnector="Pamb.value" endElement="ecs_hw" endConnector="Pamb.value"/>
+      <ssd:Connection startElement="atmos" startConnector="Tamb.value" endElement="consumer" endConnector="Tamb.value"/>
+      <ssd:Connection startElement="atmos" startConnector="Tamb.value" endElement="ecs_hw" endConnector="Tamb.value"/>
+      <ssd:Connection startElement="consumer" startConnector="consumerRet.X[1]" endElement="ecs_hw" endConnector="consumerRet.X[1]"/>
+      <ssd:Connection startElement="consumer" startConnector="consumerRet.X[2]" endElement="ecs_hw" endConnector="consumerRet.X[2]"/>
+      <ssd:Connection startElement="consumer" startConnector="consumerRet.X[3]" endElement="ecs_hw" endConnector="consumerRet.X[3]"/>
+      <ssd:Connection startElement="consumer" startConnector="consumerRet.h" endElement="ecs_hw" endConnector="consumerRet.h"/>
+      <ssd:Connection startElement="consumer" startConnector="consumerRet.hn" endElement="ecs_hw" endConnector="consumerRet.hn"/>
+      <ssd:Connection startElement="consumer" startConnector="consumerRet.m" endElement="ecs_hw" endConnector="consumerRet.m"/>
+      <ssd:Connection startElement="consumer" startConnector="consumerRet.p" endElement="ecs_hw" endConnector="consumerRet.p"/>
+      <ssd:Connection startElement="ecs_hw" startConnector="LHexTout.value" endElement="adaption" endConnector="LHexTout.value"/>
+      <ssd:Connection startElement="ecs_hw" startConnector="consumerFeed.X[1]" endElement="consumer" endConnector="consumerFeed.X[1]"/>
+      <ssd:Connection startElement="ecs_hw" startConnector="consumerFeed.X[2]" endElement="consumer" endConnector="consumerFeed.X[2]"/>
+      <ssd:Connection startElement="ecs_hw" startConnector="consumerFeed.X[3]" endElement="consumer" endConnector="consumerFeed.X[3]"/>
+      <ssd:Connection startElement="ecs_hw" startConnector="consumerFeed.h" endElement="consumer" endConnector="consumerFeed.h"/>
+      <ssd:Connection startElement="ecs_hw" startConnector="consumerFeed.hn" endElement="consumer" endConnector="consumerFeed.hn"/>
+      <ssd:Connection startElement="ecs_hw" startConnector="consumerFeed.m" endElement="consumer" endConnector="consumerFeed.m"/>
+      <ssd:Connection startElement="ecs_hw" startConnector="consumerFeed.p" endElement="consumer" endConnector="consumerFeed.p"/>
+      <ssd:Connection startElement="ecs_sw" startConnector="TCoolingPack.value" endElement="ecs_hw" endConnector="reqCoolingTemperature.value"/>
+    </ssd:Connections>
+  </ssd:System>
+  <ssd:DefaultExperiment startTime="0" stopTime="3600"/>
+</ssd:SystemStructureDescription>

@@ -13,18 +13,18 @@ FIGURES_DIR = ROOT / "figures"
 COMPOSITION = "UseCaseComposition"
 
 STEP_EXPORTS = {
-    "03_maintained_architecture": FIGURES_DIR / "usecase_step3_architecture.dot",
-    "06_synced_architecture": FIGURES_DIR / "usecase_step6_architecture.dot",
+    "02_develop_analysis_architecture": FIGURES_DIR / "usecase_step2_analysis_architecture.dot",
+    "05_synchronize_validated_changes/synced_architecture": FIGURES_DIR / "usecase_step5_synchronized_architecture.dot",
 }
 
 GRAPH_TITLES = {
-    "03_maintained_architecture": "Step 3: Maintained Analysis Architecture",
-    "06_synced_architecture": "Step 6: Synchronized Analysis Architecture",
+    "02_develop_analysis_architecture": "Step 2: Analysis Architecture",
+    "05_synchronize_validated_changes/synced_architecture": "Step 5: Synchronized Analysis Architecture",
 }
 
 GRAPH_NAMES = {
-    "03_maintained_architecture": "usecase_step3_architecture",
-    "06_synced_architecture": "usecase_step6_architecture",
+    "02_develop_analysis_architecture": "usecase_step2_analysis_architecture",
+    "05_synchronize_validated_changes/synced_architecture": "usecase_step5_synchronized_architecture",
 }
 
 NODE_LABELS = {

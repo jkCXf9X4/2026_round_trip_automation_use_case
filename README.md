@@ -1,50 +1,54 @@
 # 2026 Round-Trip Automation Use Case
 
-This repository contains the standalone `uc_case_workflow` used to instantiate the case-study sequence from `sections/07_case_study.tex`.
+This repository packages the standalone case-study workflow described in [sections/07_case_study.tex](/home/eriro/pwa/2_work/2026_purpose_driven_modelling/sections/07_case_study.tex).
 
-All workflow-specific inputs and templates required to run the use case are included here:
+The workflow is aligned to the five paper steps:
 
-- `inputs/uc_v1.ssd`
-- `inputs/uc_v2.ssd`
-- `architecture/*.sysml`
-- `external_part_definitions.sysml`
-- `run_workflow.py`
-- `export_step_dots.py`
+1. Import the architectural entry point.
+2. Develop the analysis architecture.
+3. Generate exchange artifacts.
+4. Introduce external modifications.
+5. Synchronize validated changes.
 
-The workflow produces a traceable artifact trail under `artifacts/`, with numbered folders matching execution order:
+## Notes
 
-1. Copy the supplied SSD inputs into the workflow artifact tree.
-2. Bootstrap a minimal SysML architecture from `uc_v1.ssd`.
-3. Materialize/copy in the maintained analysis architecture. This is pre altered, located in `architecture/*.sysml`
-4. Generate the derived SSD, SSV, and FMI-facing artifacts.
-5. Clean the external `uc_v2.ssd` edit and stage the synchronization overlay.
-6. Synchronize the cleaned edit back into SysML.
-7. Record the expected synchronization failure for the uncleaned `uc_v2.ssd`.
+Step 2 and step 4 are intentionally represented by versioned manual assets because the case study defines them as human-authored workflow steps. The import, generation, and synchronization phases are executed through `pyssp_sysml2.cli`, and new externally introduced parts are inferred from the supplied candidate SSD during synchronization.
 
-## Prerequisites
+## Layout
 
-- Python 3
-- `pyssp_sysml2` available on `PYTHONPATH`
-- `pyssp_standard` and `pycps_sysmlv2` installed in the active environment
+- `manual/inputs/`: SSP snapshots used as case-study entry points.
+- `manual/inputs/uc_v1.ssd` and `manual/inputs/uc_v2.ssd` for the UC_V1 and UC_V2 SSP snapshots.
 
+- `manual/analysis_architecture/`: manually authored authoritative SysML v2 architecture for step 2.
+- `manual/analysis_architecture/*.sysml` for the manually developed step-2 analysis architecture.
 
-Or from inside this repository:
+- `manual/external_modifications/`: manually prepared step-4 candidate edit artifact.
+- `manual/external_modifications/uc_v2_candidate.ssd` for the manually prepared external candidate edit from step 4.
+
+- `artifacts/` is generated on each run. The repository keeps only the source inputs needed to execute the workflow:
+
+No generated workflow outputs are used as source inputs. The automated steps use the `pyssp_sysml2` CLI.
+
+## Run
+
+From inside this repository:
 
 ```bash
-source ../../venv/bin/activate
-PYTHONPATH=../pyssp_sysml2/src ./run_workflow.py
+python3 -m venv venv
+source . venv/bin/activate
+pip install git+https://github.com/pyssporg/pyssp_sysml2
+python3 ./run_workflow.py
 ```
+
+This regenerates `artifacts/` from scratch and records a `manifest.json` for traceability.
 
 To export the publication DOT graphs after running the workflow:
 
 ```bash
-source ../../venv/bin/activate
-PYTHONPATH=../pyssp_sysml2/src ./export_step_dots.py
+python3 ./export_step_dots.py
 ```
 
 The DOT exports are written to `figures/`.
 
-## Traceability
 
-The maintained architecture template is kept under `architecture/` and copied into the artifact tree on each workflow run before generation.
-Late-phase part definitions introduced by the external SSD edit are staged from `external_part_definitions.sysml` into `artifacts/05_external_edit/architecture_overlay/` before synchronization.
+

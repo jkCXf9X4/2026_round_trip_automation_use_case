@@ -16,12 +16,11 @@ package UCWorkflow {
   }
 
   part def FS_OPSC {
-    attribute valveBias = 0.0;
     in port Mach : ScalarSignal;
     in port P_AMB : ScalarSignal;
     in port T_AMB : ScalarSignal;
     in port eng_mflow : ScalarSignal;
-    out port pmh : FluidState;
+    in port pmh : FluidState;
     in port pmhn : FluidState;
     in port valve_mflowA : ScalarSignal;
     in port valve_mflowB : ScalarSignal;

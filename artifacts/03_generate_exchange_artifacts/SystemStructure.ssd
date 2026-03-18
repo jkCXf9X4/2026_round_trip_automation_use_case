@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<ssd:SystemStructureDescription xmlns:ssd="http://ssp-standard.org/SSP1/SystemStructureDescription" xmlns:ssc="http://ssp-standard.org/SSP1/SystemStructureCommon" version="1.0" name="UseCaseComposition" generationTool="pyssp_standard" generationDateAndTime="2026-03-18T14:57:03.337643">
+<ssd:SystemStructureDescription xmlns:ssd="http://ssp-standard.org/SSP1/SystemStructureDescription" xmlns:ssc="http://ssp-standard.org/SSP1/SystemStructureCommon" version="1.0" name="UseCaseComposition" generationTool="pyssp_standard" generationDateAndTime="2026-03-18T15:39:18.317061">
   <ssd:System name="UseCaseComposition">
     <ssd:Elements>
       <ssd:Component name="adaption" type="application/x-fmu-sharedlibrary" source="resources/AdaptionUnit.fmu">

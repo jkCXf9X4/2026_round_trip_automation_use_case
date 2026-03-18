@@ -1,39 +1,35 @@
 #!/usr/bin/env python3
-"""Execute the UC case-study workflow and persist a traceable artifact trail."""
+"""Execute the case-study workflow from sections/07_case_study.tex."""
 from __future__ import annotations
 
 import json
+import os
 import shutil
+import subprocess
 import sys
-from dataclasses import dataclass, asdict
+from dataclasses import asdict, dataclass
 from pathlib import Path
-
-from pyssp_standard.ssd import SSD
-
-from pyssp_sysml2.fmi import generate_model_descriptions
-from pyssp_sysml2.ssd import generate_ssd
-from pyssp_sysml2.ssv import generate_parameter_set
-from pyssp_sysml2.sync import sync_sysml_from_ssd
-from pyssp_sysml2.sysml import generate_sysml_from_ssd
 
 
 ROOT = Path(__file__).resolve().parent
-WORKFLOW_DIR = ROOT
-ARTIFACTS_DIR = WORKFLOW_DIR / "artifacts"
-INPUTS_DIR = ARTIFACTS_DIR / "01_inputs"
-BOOTSTRAP_DIR = ARTIFACTS_DIR / "02_bootstrap"
-MAINTAINED_ARCH_DIR = ARTIFACTS_DIR / "03_maintained_architecture"
-GENERATED_DIR = ARTIFACTS_DIR / "04_generated"
-EXTERNAL_DIR = ARTIFACTS_DIR / "05_external_edit"
-SYNC_DIR = ARTIFACTS_DIR / "06_synced_architecture"
-REPORTS_DIR = ARTIFACTS_DIR / "07_reports"
-ARCHITECTURE_TEMPLATE_DIR = WORKFLOW_DIR / "architecture"
-EXTERNAL_PART_DEFS_TEMPLATE = WORKFLOW_DIR / "external_part_definitions.sysml"
+ARTIFACTS_DIR = ROOT / "artifacts"
+MANUAL_DIR = ROOT / "manual"
+INPUTS_DIR = MANUAL_DIR / "inputs"
+
+STEP1_DIR = ARTIFACTS_DIR / "01_import_architectural_entry_point"
+STEP2_DIR = ARTIFACTS_DIR / "02_develop_analysis_architecture"
+STEP3_DIR = ARTIFACTS_DIR / "03_generate_exchange_artifacts"
+STEP4_DIR = ARTIFACTS_DIR / "04_introduce_external_modifications"
+STEP5_DIR = ARTIFACTS_DIR / "05_synchronize_validated_changes"
+
+MANUAL_ANALYSIS_ARCH_DIR = MANUAL_DIR / "analysis_architecture"
+MANUAL_EXTERNAL_DIR = MANUAL_DIR / "external_modifications"
+
+UC_V1_SSD = INPUTS_DIR / "uc_v1.ssd"
+UC_V2_SSD = INPUTS_DIR / "uc_v2.ssd"
+UC_V2_CANDIDATE_SSD = MANUAL_EXTERNAL_DIR / "uc_v2_candidate.ssd"
 
 COMPOSITION = "UseCaseComposition"
-INPUT_TEMPLATES_DIR = WORKFLOW_DIR / "inputs"
-RAW_V1 = INPUT_TEMPLATES_DIR / "uc_v1.ssd"
-RAW_V2 = INPUT_TEMPLATES_DIR / "uc_v2.ssd"
 
 
 @dataclass
@@ -44,213 +40,242 @@ class StepResult:
     details: str
 
 
-def _reset_artifact_dir(path: Path) -> None:
-    if path.exists():
-        shutil.rmtree(path)
-    path.mkdir(parents=True, exist_ok=True)
+def _reset_artifacts() -> None:
+    if ARTIFACTS_DIR.exists():
+        shutil.rmtree(ARTIFACTS_DIR)
+    ARTIFACTS_DIR.mkdir(parents=True, exist_ok=True)
 
 
-def _copy_inputs() -> StepResult:
-    INPUTS_DIR.mkdir(parents=True, exist_ok=True)
-    copied = []
-    for source in (RAW_V1, RAW_V2):
-        target = INPUTS_DIR / source.name
+def _relative(path: Path) -> str:
+    return str(path.relative_to(ROOT))
+
+
+def _normalize_cli_output(line: str) -> str:
+    written = line.removeprefix("Wrote ").strip()
+    path = Path(written)
+    if path.is_absolute():
+        return _relative(path)
+    return written
+
+
+def _run_pyssp(*args: str | os.PathLike[str]) -> list[str]:
+    command = [sys.executable, "-m", "pyssp_sysml2.cli", *map(os.fspath, args)]
+    completed = subprocess.run(
+        command,
+        cwd=ROOT,
+        check=False,
+        capture_output=True,
+        text=True,
+        env=os.environ.copy(),
+    )
+    if completed.returncode != 0:
+        message = completed.stderr.strip() or completed.stdout.strip() or "pyssp command failed"
+        raise RuntimeError(message)
+    return [line for line in completed.stdout.splitlines() if line.strip()]
+
+
+def _copy_tree(src: Path, dst: Path) -> list[Path]:
+    dst.mkdir(parents=True, exist_ok=True)
+    copied: list[Path] = []
+    for source in sorted(src.glob("*.sysml")):
+        target = dst / source.name
         shutil.copy2(source, target)
-        copied.append(str(target.relative_to(WORKFLOW_DIR)))
+        copied.append(target)
+    return copied
+
+
+def _step_1_import_architectural_entry_point() -> StepResult:
+    STEP1_DIR.mkdir(parents=True, exist_ok=True)
+    raw_ssd = STEP1_DIR / UC_V1_SSD.name
+    bootstrap_sysml = STEP1_DIR / "uc_v1_imported.sysml"
+    shutil.copy2(UC_V1_SSD, raw_ssd)
+    _run_pyssp(
+        "generate",
+        "sysml",
+        "--ssd",
+        raw_ssd,
+        "--composition",
+        COMPOSITION,
+        "--output",
+        bootstrap_sysml,
+    )
     return StepResult(
-        step="copy_inputs",
+        step="import_architectural_entry_point",
         status="ok",
-        outputs=copied,
-        details="Copied the supplied SSD inputs into the workflow artifact tree.",
+        outputs=[_relative(raw_ssd), _relative(bootstrap_sysml)],
+        details="Imported UC_V1 as SSP and transformed it into a raw SysML-based architectural representation via the pyssp_sysml2 CLI.",
     )
 
 
-def _bootstrap_sysml() -> StepResult:
-    BOOTSTRAP_DIR.mkdir(parents=True, exist_ok=True)
-    output = BOOTSTRAP_DIR / "uc_v1_bootstrap.sysml"
-    generate_sysml_from_ssd(INPUTS_DIR / RAW_V1.name, output, COMPOSITION)
+def _step_2_develop_analysis_architecture() -> StepResult:
+    written = _copy_tree(MANUAL_ANALYSIS_ARCH_DIR, STEP2_DIR)
     return StepResult(
-        step="bootstrap_sysml",
+        step="develop_analysis_architecture",
         status="ok",
-        outputs=[str(output.relative_to(WORKFLOW_DIR))],
-        details="Generated the minimal SysML bootstrap directly from uc_v1.ssd.",
+        outputs=[_relative(path) for path in written],
+        details="Materialized the maintained SysML v2 analysis architecture from the manual architecture-authoring step described in the case study.",
     )
 
 
-def _materialize_maintained_architecture() -> StepResult:
-    MAINTAINED_ARCH_DIR.mkdir(parents=True, exist_ok=True)
-    written = []
-    for source in sorted(ARCHITECTURE_TEMPLATE_DIR.glob("*.sysml")):
-        target = MAINTAINED_ARCH_DIR / source.name
-        shutil.copy2(source, target)
-        written.append(str(target.relative_to(WORKFLOW_DIR)))
-    return StepResult(
-        step="materialize_maintained_architecture",
-        status="ok",
-        outputs=written,
-        details=(
-            "Copied the normalized, split SysML analysis architecture with named proxy ports "
-            "and canonicalized component definitions."
-        ),
+def _step_3_generate_exchange_artifacts() -> StepResult:
+    STEP3_DIR.mkdir(parents=True, exist_ok=True)
+    ssd_path = STEP3_DIR / "SystemStructure.ssd"
+    ssv_path = STEP3_DIR / "parameters.ssv"
+    fmi_dir = STEP3_DIR / "model_descriptions"
+
+    _run_pyssp(
+        "generate",
+        "ssd",
+        "--architecture",
+        STEP2_DIR,
+        "--composition",
+        COMPOSITION,
+        "--output",
+        ssd_path,
+    )
+    _run_pyssp(
+        "generate",
+        "ssv",
+        "--architecture",
+        STEP2_DIR,
+        "--composition",
+        COMPOSITION,
+        "--output",
+        ssv_path,
+    )
+    fmi_lines = _run_pyssp(
+        "generate",
+        "fmi",
+        "--architecture",
+        STEP2_DIR,
+        "--composition",
+        COMPOSITION,
+        "--output-dir",
+        fmi_dir,
     )
 
-
-def _generate_derived_artifacts() -> StepResult:
-    GENERATED_DIR.mkdir(parents=True, exist_ok=True)
-    ssd_path = GENERATED_DIR / "SystemStructure.ssd"
-    ssv_path = GENERATED_DIR / "parameters.ssv"
-    fmi_dir = GENERATED_DIR / "model_descriptions"
-
-    generate_ssd(MAINTAINED_ARCH_DIR, ssd_path, COMPOSITION)
-    generate_parameter_set(MAINTAINED_ARCH_DIR, ssv_path, COMPOSITION)
-    fmi_paths = generate_model_descriptions(MAINTAINED_ARCH_DIR, fmi_dir, COMPOSITION)
-
-    outputs = [
-        str(ssd_path.relative_to(WORKFLOW_DIR)),
-        str(ssv_path.relative_to(WORKFLOW_DIR)),
-        *(str(path.relative_to(WORKFLOW_DIR)) for path in fmi_paths),
-    ]
+    outputs = [_relative(ssd_path), _relative(ssv_path)]
+    outputs.extend(
+        _normalize_cli_output(line)
+        for line in fmi_lines
+        if line.startswith("Wrote ")
+    )
     return StepResult(
-        step="generate_derived_artifacts",
+        step="generate_exchange_artifacts",
         status="ok",
         outputs=outputs,
-        details="Generated the maintained architecture's SSD, SSV, and FMI-facing artifacts.",
+        details="Generated SSD, SSV, and FMI model descriptions from the maintained analysis architecture via the pyssp_sysml2 CLI.",
     )
 
 
-def _clean_external_ssd() -> StepResult:
-    EXTERNAL_DIR.mkdir(parents=True, exist_ok=True)
-    raw_copy = EXTERNAL_DIR / RAW_V2.name
-    cleaned_copy = EXTERNAL_DIR / "uc_v2_cleaned.ssd"
-    overlay_dir = EXTERNAL_DIR / "architecture_overlay"
-    shutil.copy2(INPUTS_DIR / RAW_V2.name, raw_copy)
-    shutil.copy2(INPUTS_DIR / RAW_V2.name, cleaned_copy)
-    overlay_dir.mkdir(parents=True, exist_ok=True)
-    for source in sorted(MAINTAINED_ARCH_DIR.glob("*.sysml")):
-        shutil.copy2(source, overlay_dir / source.name)
-    shutil.copy2(
-        EXTERNAL_PART_DEFS_TEMPLATE,
-        overlay_dir / EXTERNAL_PART_DEFS_TEMPLATE.name,
-    )
-
-    rename_map = {}
-    def normalize(name: str) -> str:
-        if name.endswith(".in.y"):
-            return f"{name[: -len('.in.y')]}.value"
-        if name.endswith(".out.y"):
-            return f"{name[: -len('.out.y')]}.value"
-        if "." not in name:
-            return f"{name}.value"
-        return name
-
-    with SSD(cleaned_copy, mode="a") as ssd:
-        if ssd.system is None:
-            raise ValueError("No system element found in uc_v2.ssd")
-
-        for component in ssd.system.elements:
-            for connector in component.connectors:
-                updated = normalize(connector.name)
-                if updated != connector.name:
-                    rename_map[f"{component.name}.{connector.name}"] = f"{component.name}.{updated}"
-                    connector.name = updated
-
-        for connection in ssd.system.connections:
-            connection.start_connector = normalize(connection.start_connector)
-            connection.end_connector = normalize(connection.end_connector)
-
-    report_path = REPORTS_DIR / "external_cleanup.json"
-    report_path.parent.mkdir(parents=True, exist_ok=True)
-    report_path.write_text(json.dumps(rename_map, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+def _step_4_introduce_external_modifications() -> StepResult:
+    STEP4_DIR.mkdir(parents=True, exist_ok=True)
+    raw_intent = STEP4_DIR / "uc_v2_change_intent.ssd"
+    candidate_edit = STEP4_DIR / "uc_v2_candidate.ssd"
+    shutil.copy2(UC_V2_SSD, raw_intent)
+    shutil.copy2(UC_V2_CANDIDATE_SSD, candidate_edit)
     return StepResult(
-        step="clean_external_ssd",
+        step="introduce_external_modifications",
         status="ok",
-        outputs=[
-            str(raw_copy.relative_to(WORKFLOW_DIR)),
-            str(cleaned_copy.relative_to(WORKFLOW_DIR)),
-            str((overlay_dir / EXTERNAL_PART_DEFS_TEMPLATE.name).relative_to(WORKFLOW_DIR)),
-            str(report_path.relative_to(WORKFLOW_DIR)),
-        ],
-        details=(
-            "Normalized the external SSD connector names and staged the late-phase part "
-            "definitions required for synchronization."
-        ),
+        outputs=[_relative(raw_intent), _relative(candidate_edit)],
+        details="Staged the externally edited candidate artifact set from the manual downstream modification step, using UC_V2 as change intent and the manual alignment artifacts required for synchronization.",
     )
 
 
-def _sync_clean_edit() -> StepResult:
-    SYNC_DIR.mkdir(parents=True, exist_ok=True)
-    written = sync_sysml_from_ssd(
-        architecture_path=EXTERNAL_DIR / "architecture_overlay",
-        ssd_path=EXTERNAL_DIR / "uc_v2_cleaned.ssd",
-        composition=COMPOSITION,
-        output_architecture_dir=SYNC_DIR,
-    )
-    return StepResult(
-        step="sync_clean_edit",
-        status="ok",
-        outputs=[str(path.relative_to(WORKFLOW_DIR)) for path in written],
-        details="Applied the cleaned external edit back into the maintained SysML architecture.",
-    )
+def _step_5_synchronize_validated_changes() -> StepResult:
+    validation_dir = STEP5_DIR / "validation"
+    sync_input_dir = STEP5_DIR / "sync_input_architecture"
+    synced_arch_dir = STEP5_DIR / "synced_architecture"
+    validation_dir.mkdir(parents=True, exist_ok=True)
+    _copy_tree(STEP2_DIR, sync_input_dir)
 
-
-def _record_expected_failure() -> StepResult:
-    failure_path = REPORTS_DIR / "raw_uc_v2_sync_failure.txt"
+    raw_failure = validation_dir / "raw_uc_v2_sync_failure.txt"
     try:
-        sync_sysml_from_ssd(
-            architecture_path=EXTERNAL_DIR / "architecture_overlay",
-            ssd_path=EXTERNAL_DIR / RAW_V2.name,
-            composition=COMPOSITION,
-            output_architecture_dir=ARTIFACTS_DIR / "raw_sync_unexpected_success",
+        _run_pyssp(
+            "sync",
+            "ssd",
+            "--architecture",
+            sync_input_dir,
+            "--composition",
+            COMPOSITION,
+            "--ssd",
+            STEP4_DIR / "uc_v2_change_intent.ssd",
+            "--output-architecture-dir",
+            STEP5_DIR / "raw_sync_unexpected_success",
         )
-    except Exception as exc:  # noqa: BLE001 - report exact failure for traceability
-        failure_path.write_text(f"{type(exc).__name__}: {exc}\n", encoding="utf-8")
+    except RuntimeError as exc:
+        raw_failure.write_text(f"{exc}\n", encoding="utf-8")
+    else:
+        raw_failure.write_text(
+            "ERROR: raw UC_V2 synchronized successfully, but a validation failure was expected.\n",
+            encoding="utf-8",
+        )
         return StepResult(
-            step="record_expected_failure",
-            status="ok",
-            outputs=[str(failure_path.relative_to(WORKFLOW_DIR))],
-            details="Captured the expected sync validation failure for the uncleaned uc_v2.ssd.",
+            step="synchronize_validated_changes",
+            status="unexpected_success",
+            outputs=[_relative(raw_failure)],
+            details="Validation unexpectedly accepted the raw UC_V2 change intent.",
         )
 
-    failure_path.write_text(
-        "ERROR: raw uc_v2.ssd synchronized successfully, but a validation failure was expected.\n",
-        encoding="utf-8",
+    sync_lines = _run_pyssp(
+        "sync",
+        "ssd",
+        "--architecture",
+        sync_input_dir,
+        "--composition",
+        COMPOSITION,
+        "--ssd",
+        STEP4_DIR / "uc_v2_candidate.ssd",
+        "--output-architecture-dir",
+        synced_arch_dir,
+    )
+
+    outputs = [_relative(raw_failure)]
+    outputs.extend(
+        _normalize_cli_output(line)
+        for line in sync_lines
+        if line.startswith("Wrote ")
     )
     return StepResult(
-        step="record_expected_failure",
-        status="unexpected_success",
-        outputs=[str(failure_path.relative_to(WORKFLOW_DIR))],
-        details="The raw external edit synchronized successfully when a validation failure was expected.",
+        step="synchronize_validated_changes",
+        status="ok",
+        outputs=outputs,
+        details="Validated the candidate edit against the maintained architecture, rejected the raw UC_V2 intent, and synchronized the accepted candidate changes back into SysML via the pyssp_sysml2 CLI.",
     )
 
 
 def main() -> int:
-    _reset_artifact_dir(ARTIFACTS_DIR)
+    _reset_artifacts()
     steps = [
-        _copy_inputs(),
-        _bootstrap_sysml(),
-        _materialize_maintained_architecture(),
-        _generate_derived_artifacts(),
-        _clean_external_ssd(),
-        _sync_clean_edit(),
-        _record_expected_failure(),
+        _step_1_import_architectural_entry_point(),
+        _step_2_develop_analysis_architecture(),
+        _step_3_generate_exchange_artifacts(),
+        _step_4_introduce_external_modifications(),
+        _step_5_synchronize_validated_changes(),
     ]
 
-    manifest = {
-        "workflow": "uc_case_workflow",
-        "composition": COMPOSITION,
-        "steps": [asdict(step) for step in steps],
-    }
-    manifest_path = REPORTS_DIR / "manifest.json"
-    manifest_path.write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8")
+    manifest_path = ARTIFACTS_DIR / "manifest.json"
+    manifest_path.write_text(
+        json.dumps(
+            {
+                "workflow": "uc_case_workflow",
+                "composition": COMPOSITION,
+                "steps": [asdict(step) for step in steps],
+            },
+            indent=2,
+        )
+        + "\n",
+        encoding="utf-8",
+    )
 
-    unexpected = [step for step in steps if step.status != "ok"]
     for step in steps:
         print(f"[{step.status}] {step.step}: {step.details}")
         for output in step.outputs:
             print(f"  - {output}")
+    print(f"  - {_relative(manifest_path)}")
 
-    return 1 if unexpected else 0
+    return 1 if any(step.status != "ok" for step in steps) else 0
 
 
 if __name__ == "__main__":
-    sys.exit(main())
+    raise SystemExit(main())

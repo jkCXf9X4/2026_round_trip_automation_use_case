@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<fmiModelDescription fmiVersion="2.0" modelName="UseCaseComposition.Consumer" guid="{ae4eed32-6bec-53a8-a767-0cf008d24090}" description="Representative heat consumer connected to the ECS and later fuel loop." version="1.0" generationTool="pyssp_sysml2 tooling" generationDateAndTime="2026-03-18T13:57:03Z" variableNamingConvention="structured" numberOfEventIndicators="0">
+<fmiModelDescription fmiVersion="2.0" modelName="UseCaseComposition.Consumer" guid="{ae4eed32-6bec-53a8-a767-0cf008d24090}" description="Representative heat consumer connected to the ECS and later fuel loop." version="1.0" generationTool="pyssp_sysml2 tooling" generationDateAndTime="2026-03-18T14:39:19Z" variableNamingConvention="structured" numberOfEventIndicators="0">
   <CoSimulation modelIdentifier="Consumer" />
   <ModelVariables>
     <ScalarVariable name="heatLoadNominal_W" valueReference="0" causality="parameter" variability="fixed">

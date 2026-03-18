@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<fmiModelDescription fmiVersion="2.0" modelName="UseCaseComposition.OpenSW_busInput" guid="{2b26d6a2-01ac-5938-a3ee-dab5da1364fe}" description="Software controller receiving normalized adaptation signals." version="1.0" generationTool="pyssp_sysml2 tooling" generationDateAndTime="2026-03-18T13:57:03Z" variableNamingConvention="structured" numberOfEventIndicators="0">
+<fmiModelDescription fmiVersion="2.0" modelName="UseCaseComposition.OpenSW_busInput" guid="{2b26d6a2-01ac-5938-a3ee-dab5da1364fe}" description="Software controller receiving normalized adaptation signals." version="1.0" generationTool="pyssp_sysml2 tooling" generationDateAndTime="2026-03-18T14:39:19Z" variableNamingConvention="structured" numberOfEventIndicators="0">
   <CoSimulation modelIdentifier="OpenSW_busInput" />
   <ModelVariables>
     <ScalarVariable name="Input.Aircraft_State" valueReference="0" causality="input" description="Canonical ECS software input bundle normalized from external SSP naming.">

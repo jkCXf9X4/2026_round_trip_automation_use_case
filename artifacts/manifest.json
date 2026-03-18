@@ -1,0 +1,60 @@
+{
+  "workflow": "uc_case_workflow",
+  "composition": "UseCaseComposition",
+  "steps": [
+    {
+      "step": "import_architectural_entry_point",
+      "status": "ok",
+      "outputs": [
+        "artifacts/01_import_architectural_entry_point/uc_v1.ssd",
+        "artifacts/01_import_architectural_entry_point/uc_v1_imported.sysml"
+      ],
+      "details": "Imported UC_V1 as SSP and transformed it into a raw SysML-based architectural representation via the pyssp_sysml2 CLI."
+    },
+    {
+      "step": "develop_analysis_architecture",
+      "status": "ok",
+      "outputs": [
+        "artifacts/02_develop_analysis_architecture/composition.sysml",
+        "artifacts/02_develop_analysis_architecture/part_definitions.sysml",
+        "artifacts/02_develop_analysis_architecture/port_definitions.sysml"
+      ],
+      "details": "Materialized the maintained SysML v2 analysis architecture from the manual architecture-authoring step described in the case study."
+    },
+    {
+      "step": "generate_exchange_artifacts",
+      "status": "ok",
+      "outputs": [
+        "artifacts/03_generate_exchange_artifacts/SystemStructure.ssd",
+        "artifacts/03_generate_exchange_artifacts/parameters.ssv",
+        "artifacts/03_generate_exchange_artifacts/model_descriptions/AdaptionUnit/modelDescription.xml",
+        "artifacts/03_generate_exchange_artifacts/model_descriptions/Atmos/modelDescription.xml",
+        "artifacts/03_generate_exchange_artifacts/model_descriptions/Consumer/modelDescription.xml",
+        "artifacts/03_generate_exchange_artifacts/model_descriptions/ECS_HW/modelDescription.xml",
+        "artifacts/03_generate_exchange_artifacts/model_descriptions/OpenSW_busInput/modelDescription.xml"
+      ],
+      "details": "Generated SSD, SSV, and FMI model descriptions from the maintained analysis architecture via the pyssp_sysml2 CLI."
+    },
+    {
+      "step": "introduce_external_modifications",
+      "status": "ok",
+      "outputs": [
+        "artifacts/04_introduce_external_modifications/uc_v2_change_intent.ssd",
+        "artifacts/04_introduce_external_modifications/uc_v2_candidate.ssd"
+      ],
+      "details": "Staged the externally edited candidate artifact set from the manual downstream modification step, using UC_V2 as change intent and the manual alignment artifacts required for synchronization."
+    },
+    {
+      "step": "synchronize_validated_changes",
+      "status": "ok",
+      "outputs": [
+        "artifacts/05_synchronize_validated_changes/validation/raw_uc_v2_sync_failure.txt",
+        "artifacts/05_synchronize_validated_changes/synced_architecture/composition.sysml",
+        "artifacts/05_synchronize_validated_changes/synced_architecture/inferred_external_parts.sysml",
+        "artifacts/05_synchronize_validated_changes/synced_architecture/part_definitions.sysml",
+        "artifacts/05_synchronize_validated_changes/synced_architecture/port_definitions.sysml"
+      ],
+      "details": "Validated the candidate edit against the maintained architecture, rejected the raw UC_V2 intent, and synchronized the accepted candidate changes back into SysML via the pyssp_sysml2 CLI."
+    }
+  ]
+}

@@ -4,10 +4,10 @@
     <ssd:Elements>
       <ssd:Component name="adaption" type="application/x-fmu-sharedlibrary" source="resources/AdaptionUnit.fmu" implementation="CoSimulation">
         <ssd:Connectors>
-          <ssd:Connector name="Aircraft_State" kind="input">
+          <ssd:Connector name="Aircraft_State.value" kind="input">
             <ssc:Real/>
           </ssd:Connector>
-          <ssd:Connector name="LHexTout" kind="input">
+          <ssd:Connector name="LHexTout.value" kind="input">
             <ssc:Real/>
           </ssd:Connector>
           <ssd:Connector name="sWsignals.TLiquid" kind="output">
@@ -20,16 +20,16 @@
       </ssd:Component>
       <ssd:Component name="atmos" type="application/x-fmu-sharedlibrary" source="resources/Atmos.fmu" implementation="CoSimulation">
         <ssd:Connectors>
-          <ssd:Connector name="Alt" kind="input">
+          <ssd:Connector name="Alt.value" kind="input">
             <ssc:Real/>
           </ssd:Connector>
-          <ssd:Connector name="Ma" kind="input">
+          <ssd:Connector name="Ma.value" kind="input">
             <ssc:Real/>
           </ssd:Connector>
-          <ssd:Connector name="Tamb" kind="output">
+          <ssd:Connector name="Tamb.value" kind="output">
             <ssc:Real/>
           </ssd:Connector>
-          <ssd:Connector name="Pamb" kind="output">
+          <ssd:Connector name="Pamb.value" kind="output">
             <ssc:Real/>
           </ssd:Connector>
         </ssd:Connectors>
@@ -57,19 +57,19 @@
           <ssd:Connector name="consumerFeed.hn" kind="input">
             <ssc:Real/>
           </ssd:Connector>
-          <ssd:Connector name="Alt" kind="input">
+          <ssd:Connector name="Alt.value" kind="input">
             <ssc:Real/>
           </ssd:Connector>
-          <ssd:Connector name="Mach" kind="input">
+          <ssd:Connector name="Mach.value" kind="input">
             <ssc:Real/>
           </ssd:Connector>
-          <ssd:Connector name="Tamb" kind="input">
+          <ssd:Connector name="Tamb.value" kind="input">
             <ssc:Real/>
           </ssd:Connector>
-          <ssd:Connector name="Pamb" kind="input">
+          <ssd:Connector name="Pamb.value" kind="input">
             <ssc:Real/>
           </ssd:Connector>
-          <ssd:Connector name="heatLoad" kind="input">
+          <ssd:Connector name="heatLoad.value" kind="input">
             <ssc:Real unit="W"/>
           </ssd:Connector>
           <ssd:Connector name="consumerRet.m" kind="output">
@@ -93,26 +93,26 @@
           <ssd:Connector name="consumerFeed.X[3]" kind="output">
             <ssc:Real/>
           </ssd:Connector>
-          <ssd:Connector name="inletTemp" kind="output">
+          <ssd:Connector name="inletTemp.value" kind="output">
             <ssc:Real unit="K"/>
           </ssd:Connector>
-          <ssd:Connector name="outletTemp" kind="output">
+          <ssd:Connector name="outletTemp.value" kind="output">
             <ssc:Real unit="K"/>
           </ssd:Connector>
         </ssd:Connectors>
       </ssd:Component>
       <ssd:Component name="ecs_hw" type="application/x-fmu-sharedlibrary" source="resources/ECS_HW.fmu" implementation="CoSimulation">
         <ssd:Connectors>
-          <ssd:Connector name="Alt" kind="input">
+          <ssd:Connector name="Alt.value" kind="input">
             <ssc:Real/>
           </ssd:Connector>
-          <ssd:Connector name="Mach" kind="input">
+          <ssd:Connector name="Mach.value" kind="input">
             <ssc:Real/>
           </ssd:Connector>
-          <ssd:Connector name="Tamb" kind="input">
+          <ssd:Connector name="Tamb.value" kind="input">
             <ssc:Real/>
           </ssd:Connector>
-          <ssd:Connector name="Pamb" kind="input">
+          <ssd:Connector name="Pamb.value" kind="input">
             <ssc:Real unit="Pa"/>
           </ssd:Connector>
           <ssd:Connector name="consumerFeed.p" kind="input">
@@ -136,7 +136,7 @@
           <ssd:Connector name="consumerRet.hn" kind="input">
             <ssc:Real/>
           </ssd:Connector>
-          <ssd:Connector name="reqCoolingTemperature" kind="input">
+          <ssd:Connector name="reqCoolingTemperature.value" kind="input">
             <ssc:Real/>
           </ssd:Connector>
           <ssd:Connector name="consumerFeed.m" kind="output">
@@ -160,7 +160,7 @@
           <ssd:Connector name="consumerRet.X[3]" kind="output">
             <ssc:Real/>
           </ssd:Connector>
-          <ssd:Connector name="LHexTout" kind="output">
+          <ssd:Connector name="LHexTout.value" kind="output">
             <ssc:Real unit="K"/>
           </ssd:Connector>
         </ssd:Connectors>
@@ -173,29 +173,29 @@
           <ssd:Connector name="Input.Aircraft_State" kind="input">
             <ssc:Enumeration name="Aircraft_State_Type"/>
           </ssd:Connector>
-          <ssd:Connector name="TCoolingPack" kind="output">
+          <ssd:Connector name="TCoolingPack.value" kind="output">
             <ssc:Real/>
           </ssd:Connector>
         </ssd:Connectors>
       </ssd:Component>
       <ssd:Component name="fuel" type="application/x-fmu-sharedlibrary" source="resources/FS_OPSC.fmu" implementation="CoSimulation">
         <ssd:Connectors>
-          <ssd:Connector name="P_AMB" kind="input">
+          <ssd:Connector name="P_AMB.value" kind="input">
             <ssc:Real unit="Pa"/>
           </ssd:Connector>
-          <ssd:Connector name="T_AMB" kind="input">
+          <ssd:Connector name="T_AMB.value" kind="input">
             <ssc:Real unit="K"/>
           </ssd:Connector>
-          <ssd:Connector name="eng_mflow" kind="input">
+          <ssd:Connector name="eng_mflow.value" kind="input">
             <ssc:Real unit="kg/s"/>
           </ssd:Connector>
-          <ssd:Connector name="Mach" kind="input">
+          <ssd:Connector name="Mach.value" kind="input">
             <ssc:Real/>
           </ssd:Connector>
-          <ssd:Connector name="valve_mflowA" kind="input">
+          <ssd:Connector name="valve_mflowA.value" kind="input">
             <ssc:Real/>
           </ssd:Connector>
-          <ssd:Connector name="valve_mflowB" kind="input">
+          <ssd:Connector name="valve_mflowB.value" kind="input">
             <ssc:Real/>
           </ssd:Connector>
           <ssd:Connector name="pmhn.m" kind="input">
@@ -219,16 +219,16 @@
           <ssd:Connector name="pmh.X[3]" kind="input">
             <ssc:Real/>
           </ssd:Connector>
-          <ssd:Connector name="valve_u" kind="output">
+          <ssd:Connector name="valve_u.value" kind="output">
             <ssc:Real/>
           </ssd:Connector>
-          <ssd:Connector name="valve_p1" kind="output">
+          <ssd:Connector name="valve_p1.value" kind="output">
             <ssc:Real/>
           </ssd:Connector>
-          <ssd:Connector name="valve_p2" kind="output">
+          <ssd:Connector name="valve_p2.value" kind="output">
             <ssc:Real/>
           </ssd:Connector>
-          <ssd:Connector name="valve_p3" kind="output">
+          <ssd:Connector name="valve_p3.value" kind="output">
             <ssc:Real/>
           </ssd:Connector>
           <ssd:Connector name="pmhn.p" kind="output">
@@ -256,43 +256,43 @@
       </ssd:Component>
       <ssd:Component name="interface_model" type="application/x-fmu-sharedlibrary" source="resources/FMU_16_aero_interface.fmu">
         <ssd:Connectors>
-          <ssd:Connector name="debug.in.y" kind="output">
+          <ssd:Connector name="debug.value" kind="output">
             <ssc:Real unit=""/>
           </ssd:Connector>
-          <ssd:Connector name="mflowA.in.y" kind="output">
+          <ssd:Connector name="mflowA.value" kind="output">
             <ssc:Real unit=""/>
           </ssd:Connector>
-          <ssd:Connector name="mflowB.in.y" kind="output">
+          <ssd:Connector name="mflowB.value" kind="output">
             <ssc:Real unit=""/>
           </ssd:Connector>
-          <ssd:Connector name="pLin.in.y" kind="output">
+          <ssd:Connector name="pLin.value" kind="output">
             <ssc:Real unit=""/>
           </ssd:Connector>
-          <ssd:Connector name="pLmax.in.y" kind="output">
+          <ssd:Connector name="pLmax.value" kind="output">
             <ssc:Real unit=""/>
           </ssd:Connector>
-          <ssd:Connector name="p_P.in.y" kind="output">
+          <ssd:Connector name="p_P.value" kind="output">
             <ssc:Real unit=""/>
           </ssd:Connector>
-          <ssd:Connector name="p_PS.in.y" kind="output">
+          <ssd:Connector name="p_PS.value" kind="output">
             <ssc:Real unit=""/>
           </ssd:Connector>
-          <ssd:Connector name="p_TP.in.y" kind="output">
+          <ssd:Connector name="p_TP.value" kind="output">
             <ssc:Real unit=""/>
           </ssd:Connector>
-          <ssd:Connector name="qTA.out.y" kind="input">
+          <ssd:Connector name="qTA.value" kind="input">
             <ssc:Real unit=""/>
           </ssd:Connector>
-          <ssd:Connector name="qTB.out.y" kind="input">
+          <ssd:Connector name="qTB.value" kind="input">
             <ssc:Real unit=""/>
           </ssd:Connector>
-          <ssd:Connector name="u.out.y" kind="input">
+          <ssd:Connector name="u.value" kind="input">
             <ssc:Real unit=""/>
           </ssd:Connector>
-          <ssd:Connector name="uA.in.y" kind="output">
+          <ssd:Connector name="uA.value" kind="output">
             <ssc:Real unit=""/>
           </ssd:Connector>
-          <ssd:Connector name="uB.in.y" kind="output">
+          <ssd:Connector name="uB.value" kind="output">
             <ssc:Real unit=""/>
           </ssd:Connector>
         </ssd:Connectors>
@@ -335,58 +335,58 @@
       </ssd:Component>
       <ssd:Component name="valve_model" type="application/x-fmu-sharedlibrary" source="resources/L90LS_UD_OS_OS.fmu">
         <ssd:Connectors>
-          <ssd:Connector name="uA" kind="input">
+          <ssd:Connector name="uA.value" kind="input">
             <ssc:Real unit="mA"/>
           </ssd:Connector>
-          <ssd:Connector name="uB" kind="input">
+          <ssd:Connector name="uB.value" kind="input">
             <ssc:Real unit="mA"/>
           </ssd:Connector>
-          <ssd:Connector name="pP" kind="input">
+          <ssd:Connector name="pP.value" kind="input">
             <ssc:Real unit="bar"/>
           </ssd:Connector>
-          <ssd:Connector name="pTA" kind="input">
+          <ssd:Connector name="pTA.value" kind="input">
             <ssc:Real unit="bar"/>
           </ssd:Connector>
-          <ssd:Connector name="pTB" kind="input">
+          <ssd:Connector name="pTB.value" kind="input">
             <ssc:Real unit="bar"/>
           </ssd:Connector>
-          <ssd:Connector name="pA" kind="input">
+          <ssd:Connector name="pA.value" kind="input">
             <ssc:Real unit="bar"/>
           </ssd:Connector>
-          <ssd:Connector name="pB" kind="input">
+          <ssd:Connector name="pB.value" kind="input">
             <ssc:Real unit="bar"/>
           </ssd:Connector>
-          <ssd:Connector name="pLin" kind="input">
+          <ssd:Connector name="pLin.value" kind="input">
             <ssc:Real unit="bar"/>
           </ssd:Connector>
-          <ssd:Connector name="pLmax" kind="input">
+          <ssd:Connector name="pLmax.value" kind="input">
             <ssc:Real unit="bar"/>
           </ssd:Connector>
-          <ssd:Connector name="qA" kind="output">
+          <ssd:Connector name="qA.value" kind="output">
             <ssc:Real unit="L/min"/>
           </ssd:Connector>
-          <ssd:Connector name="qB" kind="output">
+          <ssd:Connector name="qB.value" kind="output">
             <ssc:Real unit="L/min"/>
           </ssd:Connector>
-          <ssd:Connector name="qP" kind="output">
+          <ssd:Connector name="qP.value" kind="output">
             <ssc:Real unit="L/min"/>
           </ssd:Connector>
-          <ssd:Connector name="qTA" kind="output">
+          <ssd:Connector name="qTA.value" kind="output">
             <ssc:Real unit="L/min"/>
           </ssd:Connector>
-          <ssd:Connector name="qTB" kind="output">
+          <ssd:Connector name="qTB.value" kind="output">
             <ssc:Real unit="L/min"/>
           </ssd:Connector>
-          <ssd:Connector name="pL" kind="output">
+          <ssd:Connector name="pL.value" kind="output">
             <ssc:Real unit="bar"/>
           </ssd:Connector>
-          <ssd:Connector name="p_TP" kind="input">
+          <ssd:Connector name="p_TP.value" kind="input">
             <ssc:Real unit="bar"/>
           </ssd:Connector>
-          <ssd:Connector name="p_PS" kind="input">
+          <ssd:Connector name="p_PS.value" kind="input">
             <ssc:Real unit="bar"/>
           </ssd:Connector>
-          <ssd:Connector name="Debug" kind="output">
+          <ssd:Connector name="Debug.value" kind="output">
             <ssc:Real unit="-"/>
           </ssd:Connector>
         </ssd:Connectors>
@@ -429,32 +429,32 @@
       </ssd:Component>
     </ssd:Elements>
     <ssd:Connections>
-      <ssd:Connection startElement="interface_model" startConnector="pLmax.in.y" endElement="valve_model" endConnector="pLmax"/>
-      <ssd:Connection startElement="interface_model" startConnector="pLin.in.y" endElement="valve_model" endConnector="pLin"/>
-      <ssd:Connection startElement="interface_model" startConnector="p_P.in.y" endElement="valve_model" endConnector="pP"/>
-      <ssd:Connection startElement="interface_model" startConnector="p_PS.in.y" endElement="valve_model" endConnector="p_PS"/>
-      <ssd:Connection startElement="interface_model" startConnector="p_TP.in.y" endElement="valve_model" endConnector="p_TP"/>
-      <ssd:Connection startElement="interface_model" startConnector="uA.in.y" endElement="valve_model" endConnector="uA"/>
-      <ssd:Connection startElement="interface_model" startConnector="uB.in.y" endElement="valve_model" endConnector="uB"/>
-      <ssd:Connection startElement="valve_model" startConnector="qTA" endElement="interface_model" endConnector="qTA.out.y"/>
-      <ssd:Connection startElement="valve_model" startConnector="qTB" endElement="interface_model" endConnector="qTB.out.y"/>
-      <ssd:Connection startElement="fuel" startConnector="valve_p1" endElement="valve_model" endConnector="pA"/>
-      <ssd:Connection startElement="fuel" startConnector="valve_p1" endElement="valve_model" endConnector="pB"/>
-      <ssd:Connection startElement="fuel" startConnector="valve_p2" endElement="valve_model" endConnector="pTA"/>
-      <ssd:Connection startElement="fuel" startConnector="valve_p3" endElement="valve_model" endConnector="pTB"/>
-      <ssd:Connection startElement="fuel" startConnector="valve_u" endElement="interface_model" endConnector="u.out.y"/>
-      <ssd:Connection startElement="fuel" startConnector="valve_mflowA" endElement="interface_model" endConnector="mflowA.in.y"/>
-      <ssd:Connection startElement="fuel" startConnector="valve_mflowB" endElement="interface_model" endConnector="mflowB.in.y"/>
-      <ssd:Connection startElement="atmos" startConnector="Tamb" endElement="ecs_hw" endConnector="Tamb"/>
-      <ssd:Connection startElement="atmos" startConnector="Pamb" endElement="ecs_hw" endConnector="Pamb"/>
-      <ssd:Connection startElement="atmos" startConnector="Tamb" endElement="consumer" endConnector="Tamb"/>
-      <ssd:Connection startElement="atmos" startConnector="Pamb" endElement="consumer" endConnector="Pamb"/>
-      <ssd:Connection startElement="atmos" startConnector="Tamb" endElement="fuel" endConnector="T_AMB"/>
-      <ssd:Connection startElement="atmos" startConnector="Pamb" endElement="fuel" endConnector="P_AMB"/>
-      <ssd:Connection startElement="ecs_hw" startConnector="LHexTout" endElement="adaption" endConnector="LHexTout"/>
+      <ssd:Connection startElement="interface_model" startConnector="pLmax.value" endElement="valve_model" endConnector="pLmax.value"/>
+      <ssd:Connection startElement="interface_model" startConnector="pLin.value" endElement="valve_model" endConnector="pLin.value"/>
+      <ssd:Connection startElement="interface_model" startConnector="p_P.value" endElement="valve_model" endConnector="pP.value"/>
+      <ssd:Connection startElement="interface_model" startConnector="p_PS.value" endElement="valve_model" endConnector="p_PS.value"/>
+      <ssd:Connection startElement="interface_model" startConnector="p_TP.value" endElement="valve_model" endConnector="p_TP.value"/>
+      <ssd:Connection startElement="interface_model" startConnector="uA.value" endElement="valve_model" endConnector="uA.value"/>
+      <ssd:Connection startElement="interface_model" startConnector="uB.value" endElement="valve_model" endConnector="uB.value"/>
+      <ssd:Connection startElement="valve_model" startConnector="qTA.value" endElement="interface_model" endConnector="qTA.value"/>
+      <ssd:Connection startElement="valve_model" startConnector="qTB.value" endElement="interface_model" endConnector="qTB.value"/>
+      <ssd:Connection startElement="fuel" startConnector="valve_p1.value" endElement="valve_model" endConnector="pA.value"/>
+      <ssd:Connection startElement="fuel" startConnector="valve_p1.value" endElement="valve_model" endConnector="pB.value"/>
+      <ssd:Connection startElement="fuel" startConnector="valve_p2.value" endElement="valve_model" endConnector="pTA.value"/>
+      <ssd:Connection startElement="fuel" startConnector="valve_p3.value" endElement="valve_model" endConnector="pTB.value"/>
+      <ssd:Connection startElement="fuel" startConnector="valve_u.value" endElement="interface_model" endConnector="u.value"/>
+      <ssd:Connection startElement="fuel" startConnector="valve_mflowA.value" endElement="interface_model" endConnector="mflowA.value"/>
+      <ssd:Connection startElement="fuel" startConnector="valve_mflowB.value" endElement="interface_model" endConnector="mflowB.value"/>
+      <ssd:Connection startElement="atmos" startConnector="Tamb.value" endElement="ecs_hw" endConnector="Tamb.value"/>
+      <ssd:Connection startElement="atmos" startConnector="Pamb.value" endElement="ecs_hw" endConnector="Pamb.value"/>
+      <ssd:Connection startElement="atmos" startConnector="Tamb.value" endElement="consumer" endConnector="Tamb.value"/>
+      <ssd:Connection startElement="atmos" startConnector="Pamb.value" endElement="consumer" endConnector="Pamb.value"/>
+      <ssd:Connection startElement="atmos" startConnector="Tamb.value" endElement="fuel" endConnector="T_AMB.value"/>
+      <ssd:Connection startElement="atmos" startConnector="Pamb.value" endElement="fuel" endConnector="P_AMB.value"/>
+      <ssd:Connection startElement="ecs_hw" startConnector="LHexTout.value" endElement="adaption" endConnector="LHexTout.value"/>
       <ssd:Connection startElement="adaption" startConnector="sWsignals.TLiquid" endElement="ecs_sw" endConnector="Input.TLiquid"/>
       <ssd:Connection startElement="adaption" startConnector="sWsignals.Aircraft_State" endElement="ecs_sw" endConnector="Input.Aircraft_State"/>
-      <ssd:Connection startElement="ecs_sw" startConnector="TCoolingPack" endElement="ecs_hw" endConnector="reqCoolingTemperature"/>
+      <ssd:Connection startElement="ecs_sw" startConnector="TCoolingPack.value" endElement="ecs_hw" endConnector="reqCoolingTemperature.value"/>
       <ssd:Connection startElement="ecs_hw" startConnector="consumerFeed.p" endElement="consumer" endConnector="consumerFeed.p"/>
       <ssd:Connection startElement="ecs_hw" startConnector="consumerFeed.h" endElement="consumer" endConnector="consumerFeed.h"/>
       <ssd:Connection startElement="ecs_hw" startConnector="consumerFeed.hn" endElement="consumer" endConnector="consumerFeed.hn"/>

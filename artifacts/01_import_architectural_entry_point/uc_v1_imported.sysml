@@ -4,22 +4,11 @@ package RecoveredFromSSD {
   }
 
   port def Port_10 {
-    attribute Vacc : Real;
-    attribute Vacc0 : Real;
-    attribute X[1] : Real;
-    attribute X[2] : Real;
-    attribute X[3] : Real;
-    attribute looptype : Integer;
-    attribute pempty : Real;
-    attribute pfull : Real;
-  }
-
-  port def Port_11 {
     attribute currentMinCoolingTemp.k1 : Real;
     attribute currentMinCoolingTemp.k2 : Real;
   }
 
-  port def Port_12 {
+  port def Port_11 {
     attribute CP_Air.k : Real;
     attribute MaxCoolPower.k : Real;
     attribute MaxMassFlow.verboseRead : Boolean;
@@ -35,7 +24,7 @@ package RecoveredFromSSD {
     attribute m2km.k : Real;
   }
 
-  port def Port_13 {
+  port def Port_12 {
     attribute Pin : Real;
     attribute Tin : Real;
     attribute X[1] : Real;
@@ -44,7 +33,7 @@ package RecoveredFromSSD {
     attribute looptype : Integer;
   }
 
-  port def Port_14 {
+  port def Port_13 {
     attribute Dh : Real;
     attribute L : Real;
     attribute MCp : Real;
@@ -59,17 +48,12 @@ package RecoveredFromSSD {
     attribute z : Real;
   }
 
-  port def Port_15 {
+  port def Port_14 {
     attribute M : Real;
     attribute MF : Real;
     attribute hA : Real;
     attribute looptype : Integer;
     attribute qpump : Real;
-  }
-
-  port def Port_16 {
-    attribute Aircraft_State : Unknown;
-    attribute TLiquid : Real;
   }
 
   port def Port_2 {
@@ -112,10 +96,6 @@ package RecoveredFromSSD {
   }
 
   port def Port_5 {
-    attribute k : Real;
-  }
-
-  port def Port_6 {
     attribute X[1] : Real;
     attribute X[2] : Real;
     attribute X[3] : Real;
@@ -125,7 +105,7 @@ package RecoveredFromSSD {
     attribute p : Real;
   }
 
-  port def Port_7 {
+  port def Port_6 {
     attribute Alt_filt.k : Real;
     attribute Alt_start : Real;
     attribute Ma_filt.k : Real;
@@ -144,14 +124,14 @@ package RecoveredFromSSD {
     attribute gain.k : Real;
   }
 
-  port def Port_8 {
+  port def Port_7 {
     attribute X[1] : Real;
     attribute X[2] : Real;
     attribute X[3] : Real;
     attribute looptype : Integer;
   }
 
-  port def Port_9 {
+  port def Port_8 {
     attribute Dhc : Real;
     attribute Dhh : Real;
     attribute Kexp : Real;
@@ -168,37 +148,48 @@ package RecoveredFromSSD {
     attribute typ : Integer;
   }
 
+  port def Port_9 {
+    attribute Vacc : Real;
+    attribute Vacc0 : Real;
+    attribute X[1] : Real;
+    attribute X[2] : Real;
+    attribute X[3] : Real;
+    attribute looptype : Integer;
+    attribute pempty : Real;
+    attribute pfull : Real;
+  }
+
   part def 0001_ECS_HW {
-    in port AirToL_HEX : Port_9;
+    in port AirToL_HEX : Port_8;
     in port Alt : Port_1;
     out port LHexTout : Port_1;
     in port Mach : Port_1;
     in port Pamb : Port_1;
     in port Tamb : Port_1;
-    in port acc2_1 : Port_10;
+    in port acc2_1 : Port_9;
     in port cd : Port_4;
-    in port const1 : Port_5;
-    in port const3 : Port_5;
-    in port const4 : Port_5;
-    in port consumerFeed : Port_6;
-    in port consumerRet : Port_6;
-    in port coolinPackAir : Port_8;
-    in port coolingTemp : Port_11;
-    in port eCS : Port_12;
-    in port fd : Port_7;
-    in port nodeAirOutlet : Port_8;
-    in port nodeHEXToPipeA : Port_8;
-    in port nodePumpToHEX : Port_8;
-    in port phSrc : Port_13;
-    in port pipeA : Port_14;
-    in port pipeB : Port_14;
-    in port pipeC : Port_14;
-    in port pumpSK01955_1 : Port_15;
+    in port const1 : Port_1;
+    in port const3 : Port_1;
+    in port const4 : Port_1;
+    in port consumerFeed : Port_5;
+    in port consumerRet : Port_5;
+    in port coolinPackAir : Port_7;
+    in port coolingTemp : Port_10;
+    in port eCS : Port_11;
+    in port fd : Port_6;
+    in port nodeAirOutlet : Port_7;
+    in port nodeHEXToPipeA : Port_7;
+    in port nodePumpToHEX : Port_7;
+    in port phSrc : Port_12;
+    in port pipeA : Port_13;
+    in port pipeB : Port_13;
+    in port pipeC : Port_13;
+    in port pumpSK01955_1 : Port_14;
     in port reqCoolingTemperature : Port_1;
   }
 
   part def 0002_ECS_SW {
-    in port Input : Port_16;
+    in port Input : Port_2;
     out port TCoolingPack : Port_1;
   }
 
@@ -209,16 +200,16 @@ package RecoveredFromSSD {
     in port Pamb : Port_1;
     in port Tamb : Port_1;
     in port cd : Port_4;
-    in port const1 : Port_5;
-    in port const3 : Port_5;
-    in port const4 : Port_5;
-    in port consumerFeed : Port_6;
-    in port consumerRet : Port_6;
-    in port fd : Port_7;
+    in port const1 : Port_1;
+    in port const3 : Port_1;
+    in port const4 : Port_1;
+    in port consumerFeed : Port_5;
+    in port consumerRet : Port_5;
+    in port fd : Port_6;
     in port heatLoad : Port_1;
     out port inletTemp : Port_1;
-    in port nodeConsumerToPipeB : Port_8;
-    in port nodePipeAToConsumer : Port_8;
+    in port nodeConsumerToPipeB : Port_7;
+    in port nodePipeAToConsumer : Port_7;
     out port outletTemp : Port_1;
   }
 
